@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 
 function InputForm({ onSearch }) {
-  const [mood, setMood] = useState('');
+  const [location, setLocation] = useState('');
   const [food, setFood] = useState('');
   const [price, setPrice] = useState('');
   const [model, setModel] = useState('naive');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch({ mood, food, price, model });
+    onSearch({ location, food, price, model });
   };
 
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
       <div style={styles.row}>
-        <label style={styles.label}>Mood:</label>
-        <select value={mood} onChange={(e) => setMood(e.target.value)} style={styles.select}>
-          <option value="">Select</option>
-          <option value="happy">Happy</option>
-          <option value="sad">Sad</option>
-          <option value="adventurous">Adventurous</option>
-        </select>
+        <label style={styles.label}>Location:</label>
+        <input
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          placeholder="e.g. North Carolina"
+          style={styles.input}
+        />
 
         <label style={styles.label}>Food Type:</label>
         <input
