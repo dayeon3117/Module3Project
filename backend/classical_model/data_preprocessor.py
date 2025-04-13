@@ -1,16 +1,17 @@
 import pandas as pd
 import numpy as np
 import scipy.sparse
+import os
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.feature_extraction.text import CountVectorizer
-from data_loader import load_json_to_dataframe
-from Module3Project.backend.classical_model.autoencoder_training import train_autoencoder
-from Module3Project.backend.classical_model.autoencoder_testing import test_model
-from Module3Project.backend.classical_model.autoencoder import denoising_autoencoder
-from Module3Project.backend.classical_model.recommender import recommendations
+from backend.classical_model.data_loader import load_json_to_dataframe
+from backend.classical_model.autoencoder_training import train_autoencoder
+from backend.classical_model.autoencoder_testing import test_model
+from backend.classical_model.autoencoder import denoising_autoencoder
+from backend.classical_model.recommender import recommendations
 
-directory= "C:/Users/santo/Documents/AIPI540/Assignment3a/Yelp-JSON/Yelp JSON/yelp_dataset"
-filename="yelp_academic_dataset_business.json"
+directory = os.path.join(os.path.dirname(__file__), "../yelp_data")
+filename = "yelp_academic_dataset_business.json"
 business_df = load_json_to_dataframe(directory, filename)
 
 
@@ -72,3 +73,63 @@ embedding_results=test_model(training, X_test)
 recommendation_results = recommendations(embedding_results, restaurant_df, query_idx=0, n=5)
 
 print(recommendation_results[['categories', 'stars', 'city', 'state', 'attributes']])
+
+def run_pipeline(query_idx=0, n=5):
+    from backend.classical_model.data_loader import load_json_to_dataframe
+    from backend.classical_model.autoencoder_training import train_autoencoder
+    from backend.classical_model.autoencoder_testing import test_model
+    from backend.classical_model.autoencoder import denoising_autoencoder
+    from backend.classical_model.recommender import recommendations
+    import scipy.sparse
+    import numpy as np
+    import pandas as pd
+    from sklearn.feature_extraction.text import CountVectorizer
+    from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
+    from sklearn.model_selection import train_test_split
+
+    directory = os.path.join(os.path.dirname(__file__), "../yelp_data")
+    filename = "yelp_academic_dataset_business.json"
+    business_df = load_json_to_dataframe(directory, filename)
+    restaurant_df = business_df[business_df['categories'].str.contains('Restaurants', case=False, na=False)]
+
+    features = restaurant_df[['categories', 'stars', 'city', 'state', 'attributes']].copy()
+
+    # Preprocess features
+    vectorizer = CountVectorizer(tokenizer=lambda x: x.split(', '), binary=True, token_pattern=None)
+    category_features = vectorizer.fit_transform(features['categories'].fillna(''))
+
+    features['stars'] = MinMaxScaler().fit_transform(features[['stars']])
+
+    encoder = OneHotEncoder(sparse_output=False)
+    location_features = encoder.fit_transform(features[['city', 'state']].fillna('Unknown'))
+
+    features['price_range'] = features['attributes'].apply(
+        lambda x: x.get('RestaurantsPriceRange2', 2) if isinstance(x, dict) else 2
+    )
+    features['price_range'] = pd.to_numeric(features['price_range'], errors='coerce')  
+    features['price_range'] = features['price_range'].fillna(features['price_range'].median())
+    price_features = MinMaxScaler().fit_transform(features[['price_range']])
+
+    X = scipy.sparse.hstack([
+        category_features,
+        location_features,
+        price_features,
+        features['stars'].values.reshape(-1, 1)
+    ]).toarray()
+
+    # Train/test split
+    X_train, X_test = train_test_split(X, test_size=0.2, random_state=0)
+
+    # Model
+    input_dim = X_train.shape[1]
+    encoding_dimensions = 64
+    model = denoising_autoencoder(input_dim, encoding_dimensions)
+    training = train_autoencoder(model, X_train, epochs=50, batch_size=256)
+
+    # Test embeddings
+    embedding_results = test_model(training, X_test)
+
+    # Get recommendations
+    recommendation_results = recommendations(embedding_results, restaurant_df, query_idx=query_idx, n=n)
+
+    return recommendation_results.to_dict(orient="records")

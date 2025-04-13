@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
-#from naive_model.run_naive import recommend_naive
-#from classical_model.run_classical import recommend_classical
-#from deep_model.run_deep import recommend_deep 
+from flask_cors import CORS
+from backend.classical_model.run_classical import recommend_classical
+# from naive_model.run_naive import recommend_naive
+# from deep_model.run_deep import recommend_deep 
 
 app = Flask(__name__)
+CORS(app)  # allows frontend to call backend
 
 @app.route('/recommend', methods=['POST'])
 def recommend():
@@ -11,12 +13,12 @@ def recommend():
     model_type = data.get("model")
 
     try:
-        if model_type == "naive":
-            return jsonify({"results": recommend_naive(data)})
-        elif model_type == "classical":
+        if model_type == "classical":
             return jsonify({"results": recommend_classical(data)})
-        elif model_type == "deep":
-            return jsonify({"results": recommend_deep(data)})
+        # elif model_type == "naive":
+        #     return jsonify({"results": recommend_naive(data)})
+        # elif model_type == "deep":
+        #     return jsonify({"results": recommend_deep(data)})
         else:
             return jsonify({"error": "Unknown model type"}), 400
     except Exception as e:
