@@ -4,10 +4,10 @@ import scipy.sparse
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.feature_extraction.text import CountVectorizer
 from data_loader import load_json_to_dataframe
-from autoencoder_training import train_autoencoder
-from autoencoder_testing import test_model
-from autoencoder import denoising_autoencoder
-from recommender import recommendations
+from Module3Project.backend.classical_model.autoencoder_training import train_autoencoder
+from Module3Project.backend.classical_model.autoencoder_testing import test_model
+from Module3Project.backend.classical_model.autoencoder import denoising_autoencoder
+from Module3Project.backend.classical_model.recommender import recommendations
 
 directory= "C:/Users/santo/Documents/AIPI540/Assignment3a/Yelp-JSON/Yelp JSON/yelp_dataset"
 filename="yelp_academic_dataset_business.json"
