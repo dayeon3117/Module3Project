@@ -25,66 +25,66 @@ The app is deployed and running on Render:
 - Strong performance in understanding food type preferences
 
 ## Project Structure
-Module3Project/
-├── backend/
-│   ├── app.py
-│   ├── requirements.txt
-│
-│   ├── classical_model/
-│   │   ├── autoencoder.py
-│   │   ├── autoencoder_testing.py
-│   │   ├── autoencoder_training.py
-│   │   ├── data_loader.py
-│   │   ├── data_preprocessor.py
-│   │   ├── embeddings.npy
-│   │   ├── metadata.csv
-│   │   ├── model_weights.pth
-│   │   ├── recommender.py
-│   │   ├── run_classical.py
-│   │   └── serve_model.py
-│
-│   ├── deep_model/
-│   │   └── deep_model.py
-│
-│   ├── naive_model/
-│   │   ├── data_loader.py
-│   │   ├── data_preprocessor.py
-│   │   ├── naive_model.py
-│   │   ├── recommender.py
-│   │   └── run_naive.py
-│
-│   ├── utils/
-│   │   └── gdrive_downloader.py
-│
-│   └── yelp_data/
-│       └── yelp_academic_dataset_business.json
-│
-├── frontend/
-│   ├── public/
-│   │   ├── favicon.ico
-│   │   ├── index.html
-│   │   ├── logo192.png
-│   │   ├── logo512.png
-│   │   ├── manifest.json
-│   │   └── robots.txt
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── InputForm.js
-│   │   │   └── RestaurantCard.js
-│   │   ├── App.css
-│   │   ├── App.js
-│   │   ├── App.test.js
-│   │   ├── Chatbot.js
-│   │   ├── index.css
-│   │   ├── index.js
-│   │   ├── logo.svg
-│   │   ├── reportWebVitals.js
-│   │   ├── setupTests.js
-│   │   └── styles.css
-│   ├── package.json
-│   ├── package-lock.json
-│   └── .gitignore
-│
-├── README.md
-└── .gitignore
+Module3Project/  
+├── backend/  
+│   ├── app.py  
+│   ├── requirements.txt  
+│  
+│   ├── classical_model/  
+│   │   ├── autoencoder.py  
+│   │   ├── autoencoder_testing.py  
+│   │   ├── autoencoder_training.py  
+│   │   ├── data_loader.py  
+│   │   ├── data_preprocessor.py  
+│   │   ├── embeddings.npy  
+│   │   ├── metadata.csv  
+│   │   ├── model_weights.pth  
+│   │   ├── recommender.py  
+│   │   ├── run_classical.py  
+│   │   └── serve_model.py  
+│  
+│   ├── deep_model/  
+│   │   └── deep_model.py  
+│  
+│   ├── naive_model/  
+│   │   ├── data_loader.py  
+│   │   ├── data_preprocessor.py  
+│   │   ├── naive_model.py  
+│   │   ├── recommender.py  
+│   │   └── run_naive.py  
+│  
+│   ├── utils/  
+│   │   └── gdrive_downloader.py  
+│  
+│   └── yelp_data/  
+│       └── yelp_academic_dataset_business.json  
+│  
+├── frontend/  
+│   ├── public/  
+│   │   ├── favicon.ico  
+│   │   ├── index.html  
+│   │   ├── logo192.png  
+│   │   ├── logo512.png  
+│   │   ├── manifest.json  
+│   │   └── robots.txt  
+│   ├── src/  
+│   │   ├── components/  
+│   │   │   ├── InputForm.js  
+│   │   │   └── RestaurantCard.js  
+│   │   ├── App.css  
+│   │   ├── App.js  
+│   │   ├── App.test.js  
+│   │   ├── Chatbot.js  
+│   │   ├── index.css  
+│   │   ├── index.js  
+│   │   ├── logo.svg  
+│   │   ├── reportWebVitals.js  
+│   │   ├── setupTests.js  
+│   │   └── styles.css  
+│   ├── package.json  
+│   ├── package-lock.json  
+│   └── .gitignore  
+│  
+├── README.md  
+└── .gitignore  
 
