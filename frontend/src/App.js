@@ -10,7 +10,7 @@ function App() {
   const handleSearch = async (filters) => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/recommend", {
+      const res = await fetch("https://module3projectbackend.onrender.com/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(filters),
