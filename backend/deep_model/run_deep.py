@@ -3,7 +3,7 @@ import torch
 import numpy as np
 import pandas as pd
 from sentence_transformers import SentenceTransformer
-from deep_model import load_json_lines, preprocess_yelp_data, encode_descriptions, recommend_restaurants
+from deep_model.deep_model import load_json_lines, preprocess_yelp_data, encode_descriptions, recommend_restaurants
 
 def recommend_deep(data):
     # Get the user's query (e.g., a text string like "Vietnamese cheap")
