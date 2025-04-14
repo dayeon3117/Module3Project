@@ -32,10 +32,10 @@ function InputForm({ onSearch }) {
 
         <label style={styles.label}>Price:</label>
         <select value={price} onChange={(e) => setPrice(e.target.value)} style={styles.select}>
-          <option value="">Select</option>
-          <option value="1">$</option>
-          <option value="2">$$</option>
-          <option value="3">$$$</option>
+        <option value="">Select</option>
+        <option value="$">$</option>
+        <option value="$$">$$</option>
+        <option value="$$$">$$$</option>
         </select>
 
         <label style={styles.label}>Model:</label>
