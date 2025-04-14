@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
 from classical_model.recommender import recommendations
+import os
 
 def recommend_from_saved(query_idx=0, n=5):
-    model_path = os.path.join(os.path.dirname(__file__), "embeddings.npy")
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(current_dir, "embeddings.npy")
     embeddings = np.load(model_path, allow_pickle=True)
     df = pd.read_csv("backend/classical_model/metadata.csv")
 

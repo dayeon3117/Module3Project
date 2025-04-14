@@ -30,6 +30,24 @@ for key, val in FILE_MAP.items():
         print(f"Downloading {key} from Google Drive...")
         download_from_gdrive(val["id"], val["dest"])
 
+# List the file paths that must exist in your repository.
+files_to_check = [
+    "backend/classical_model/embeddings.npy",
+    "backend/classical_model/metadata.csv",
+    "backend/classical_model/model_weights.pth",
+    "backend/naive_model/yelp_data/yelp_academic_dataset_business.json"
+]
+
+print("Checking required files...")
+
+# Iterate over the expected files and report whether they exist.
+for rel_path in files_to_check:
+    abs_path = os.path.abspath(rel_path)
+    if os.path.exists(abs_path):
+        print(f"File exists: {abs_path}")
+    else:
+        print(f"File NOT found: {abs_path}")
+
 from classical_model.run_classical import recommend_classical
 from naive_model.run_naive import recommend_naive
 # from deep_model.run_deep import recommend_deep

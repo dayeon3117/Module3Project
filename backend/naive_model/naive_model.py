@@ -3,7 +3,8 @@ from recommender import naive_recommend
 import os
 
 # Use relative path inside the project
-directory = "yelp_data"
+current_dir = os.path.dirname(os.path.abspath(__file__))
+directory = os.path.join(current_dir, "yelp_data")
 filename = "yelp_academic_dataset_business.json"
 
 restaurant_df = preprocess_data(directory, filename)
