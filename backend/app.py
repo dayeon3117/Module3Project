@@ -19,7 +19,7 @@ FILE_MAP = {
     },
     "yelp_data": {
         "id": "1ZEoaLub5AKWTq-9BoBoeBPplb9epzxtA",
-        "dest": "backend/yelp_data/yelp_academic_dataset_business.json"
+        "dest": "backend/naive_model/yelp_data/yelp_academic_dataset_business.json"
     }
 }
 

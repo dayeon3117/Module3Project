@@ -14,7 +14,7 @@ import torch
 
 def run_pipeline(query_idx=0, n=5, save_outputs=True):
     # Load data
-    directory = os.path.join(os.path.dirname(__file__), "../yelp_data")
+    directory = os.path.join(os.path.dirname(__file__), "yelp_data")
     filename = "yelp_academic_dataset_business.json"
     business_df = load_json_to_dataframe(directory, filename)
     restaurant_df = business_df[business_df['categories'].str.contains('Restaurants', case=False, na=False)]
