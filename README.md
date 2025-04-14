@@ -9,7 +9,7 @@ The app is deployed and running on Render:
 
 ## Data Pipeline
 
-
+All data was sourced from the Yelp Open Dataset (https://business.yelp.com/data/resources/open-dataset/): real-world data from Yelp related to restaurant businesses. This data includes customer reviews, price range, photos, check-ins, hours of operation, parking availability, and ambiance. We downloaded the JSON provided on this website, and we scraped a subset of that data as a separate JSON to train our models. Then, the data was cleaned optimally and individually for each of our three approaches. Due to the highly detailed nature of the dataset, we chose to focus on features that would be helpful in rudimentary recommendation systems.
 
 ## Models Included
 
