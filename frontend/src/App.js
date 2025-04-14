@@ -9,26 +9,19 @@ function App() {
 
   const handleSearch = async (filters) => {
     setLoading(true);
-    // Placeholder for now — simulate delay
-    setTimeout(() => {
-      setRestaurants([
-        {
-          name: 'Sunset Sushi',
-          category: 'Japanese',
-          rating: 4.6,
-          price: 2,
-          address: '123 Tokyo Lane',
-        },
-        {
-          name: 'Comfort Bites',
-          category: 'American',
-          rating: 4.2,
-          price: 1,
-          address: '456 Cozy Ave',
-        },
-      ]);
+    try {
+      const res = await fetch("http://localhost:5000/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(filters),
+      });
+      const data = await res.json();
+      setRestaurants(data.results || []);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   return (
