@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-from backend.naive_model.data_preprocessor import preprocess_data
-from backend.naive_model.recommender import naive_recommend
+from naive_model.data_preprocessor import preprocess_data
+from naive_model.recommender import naive_recommend
 
 def recommend_naive(data):
     food = data.get('food', '').lower()

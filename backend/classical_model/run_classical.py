@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from backend.classical_model.recommender import recommendations
+from classical_model.recommender import recommendations
 
 def recommend_classical(data):
     # Extract and preprocess inputs

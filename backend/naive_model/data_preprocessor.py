@@ -1,5 +1,5 @@
 import pandas as pd
-from backend.naive_model.data_loader import load_json_to_dataframe
+from naive_model.data_loader import load_json_to_dataframe
 
 def preprocess_data(directory, filename):
     df = load_json_to_dataframe(directory, filename)

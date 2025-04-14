@@ -1,8 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from backend.classical_model.run_classical import recommend_classical
-from backend.naive_model.run_naive import recommend_naive
-from backend.classical_model.run_classical import recommend_classical
+from classical_model.run_classical import recommend_classical
+from naive_model.run_naive import recommend_naive
+from classical_model.run_classical import recommend_classical
 
 # from deep_model.run_deep import recommend_deep 
 

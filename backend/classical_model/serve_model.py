@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from backend.classical_model.recommender import recommendations
+from classical_model.recommender import recommendations
 
 def recommend_from_saved(query_idx=0, n=5):
     embeddings = np.load("backend/classical_model/embeddings.npy")

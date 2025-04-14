@@ -5,11 +5,11 @@ import scipy.sparse
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
-from backend.classical_model.data_loader import load_json_to_dataframe
-from backend.classical_model.autoencoder import denoising_autoencoder
-from backend.classical_model.autoencoder_training import train_autoencoder
-from backend.classical_model.autoencoder_testing import test_model
-from backend.classical_model.recommender import recommendations
+from classical_model.data_loader import load_json_to_dataframe
+from classical_model.autoencoder import denoising_autoencoder
+from classical_model.autoencoder_training import train_autoencoder
+from classical_model.autoencoder_testing import test_model
+from classical_model.recommender import recommendations
 import torch
 
 def run_pipeline(query_idx=0, n=5, save_outputs=True):
