@@ -6,20 +6,20 @@ from utils.gdrive_downloader import download_from_gdrive
 
 FILE_MAP = {
     #"embeddings": {
-      #  "id": "1EiTQYAEXhL9WN-pdL949ZQJurvpuHCTg",
-     #   "dest": "backend/classical_model/embeddings.npy"
+     # "id": "1EiTQYAEXhL9WN-pdL949ZQJurvpuHCTg",
+      # "dest": "classical_model/embeddings.npy"
     #},
     "metadata": {
         "id": "1RctNK1Qld3W9rCLjnptJxylewv7IMfnL",
-        "dest": "backend/classical_model/metadata.csv"
+        "dest": "classical_model/metadata.csv"
     },
     "model_weights": {
         "id": "1ZbJa_aP8puYifenXKTVWevEhNFZZ1hKG",
-        "dest": "backend/classical_model/model_weights.pth"
+        "dest": "classical_model/model_weights.pth"
     },
     "yelp_data": {
         "id": "1ZEoaLub5AKWTq-9BoBoeBPplb9epzxtA",
-        "dest": "backend/naive_model/yelp_data/yelp_academic_dataset_business.json"
+        "dest": "naive_model/yelp_data/yelp_academic_dataset_business.json"
     }
 }
 

@@ -13,7 +13,8 @@ def recommend_classical(data):
     current_dir = os.path.dirname(os.path.abspath(__file__))
     model_path = os.path.join(current_dir, "embeddings.npy")
     embeddings = np.load(model_path, allow_pickle=True)
-    df = pd.read_csv("backend/classical_model/metadata.csv")
+    metadata_path = os.path.join(current_dir, "metadata.csv")
+    df = pd.read_csv(metadata_path)
 
     # Clean and prepare data
     df['categories'] = df['categories'].fillna('').str.lower()
