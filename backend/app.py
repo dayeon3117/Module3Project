@@ -50,7 +50,7 @@ for rel_path in files_to_check:
 
 from classical_model.run_classical import recommend_classical
 from naive_model.run_naive import recommend_naive
-# from deep_model.run_deep import recommend_deep
+from deep_model.run_deep import recommend_deep
 
 app = Flask(__name__)
 CORS(app)
