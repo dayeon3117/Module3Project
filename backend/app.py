@@ -17,11 +17,11 @@ FILE_MAP = {
         "id": "1ZbJa_aP8puYifenXKTVWevEhNFZZ1hKG",
         "dest": "classical_model/model_weights.pth"
     },
-    "yelp_data": {
+    "naive_yelp_data": {
         "id": "1ZEoaLub5AKWTq-9BoBoeBPplb9epzxtA",
         "dest": "naive_model/yelp_data/yelp_academic_dataset_business.json"
     },
-    "yelp_data": {
+    "deep_yelp_data": {
         "id": "1ZEoaLub5AKWTq-9BoBoeBPplb9epzxtA",
         "dest": "deep_model/yelp_data/yelp_academic_dataset_business.json"
     }
@@ -39,7 +39,8 @@ files_to_check = [
     "classical_model/embeddings.npy",
     "classical_model/metadata.csv",
     "classical_model/model_weights.pth",
-    "naive_model/yelp_data/yelp_academic_dataset_business.json"
+    "naive_model/yelp_data/yelp_academic_dataset_business.json",
+    "deep_model/yelp_data/yelp_academic_dataset_business.json"
 ]
 
 print("Checking required files...")
