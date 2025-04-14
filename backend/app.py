@@ -9,6 +9,10 @@ from backend.classical_model.run_classical import recommend_classical
 app = Flask(__name__)
 CORS(app)  
 
+@app.route("/")
+def home():
+    return "Restaurant recommender is live!"
+
 @app.route('/recommend', methods=['POST'])
 def recommend():
     data = request.json
@@ -26,7 +30,3 @@ def recommend():
     except Exception as e:
         print("Error:", str(e))
         return jsonify({"error": str(e)}), 500
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
