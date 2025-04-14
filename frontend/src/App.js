@@ -16,7 +16,7 @@ function App() {
         body: JSON.stringify(filters),
       });
       const data = await res.json();
-      setRestaurants(data.results || []);
+      setRestaurants(data || []);
     } catch (error) {
       console.error("Error fetching recommendations:", error);
     } finally {
