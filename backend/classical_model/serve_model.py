@@ -3,7 +3,7 @@ import pandas as pd
 from classical_model.recommender import recommendations
 
 def recommend_from_saved(query_idx=0, n=5):
-    embeddings = np.load("backend/classical_model/embeddings.npy")
+    embeddings = np.load("backend/classical_model/embeddings.npy", allow_pickle=True)
     df = pd.read_csv("backend/classical_model/metadata.csv")
 
     recs = recommendations(embeddings, df, query_idx=query_idx, n=n)
