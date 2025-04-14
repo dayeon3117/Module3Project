@@ -12,7 +12,7 @@ def recommend_deep(data):
     # Compute file paths relative to this file's directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
     # Assumes your Yelp JSON file is stored one level up in the yelp_data folder
-    json_file = os.path.join(current_dir, "../yelp_data/yelp_academic_dataset_business.json")
+    json_file = os.path.join(current_dir, "yelp_data/yelp_academic_dataset_business.json")
     embed_file = os.path.join(current_dir, "restaurant_embeddings.npy")
     data_file = os.path.join(current_dir, "restaurants_with_embeddings.csv")
     
