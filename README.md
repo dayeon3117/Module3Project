@@ -25,6 +25,7 @@ The app is deployed and running on Render:
 - Strong performance in understanding food type preferences
 
 ## Project Structure
+```
 Module3Project/  
 ├── backend/  
 │   ├── app.py  
@@ -86,5 +87,6 @@ Module3Project/
 │   └── .gitignore  
 │  
 ├── README.md  
-└── .gitignore  
+└── .gitignore
+```
 
