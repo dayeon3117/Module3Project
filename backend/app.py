@@ -5,10 +5,10 @@ from flask_cors import CORS
 from utils.gdrive_downloader import download_from_gdrive
 
 FILE_MAP = {
-    "embeddings": {
-        "id": "1EiTQYAEXhL9WN-pdL949ZQJurvpuHCTg",
-        "dest": "backend/classical_model/embeddings.npy"
-    },
+    #"embeddings": {
+      #  "id": "1EiTQYAEXhL9WN-pdL949ZQJurvpuHCTg",
+     #   "dest": "backend/classical_model/embeddings.npy"
+    #},
     "metadata": {
         "id": "1RctNK1Qld3W9rCLjnptJxylewv7IMfnL",
         "dest": "backend/classical_model/metadata.csv"
