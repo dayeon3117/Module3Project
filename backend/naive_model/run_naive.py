@@ -9,7 +9,7 @@ def recommend_naive(data):
     price_level = len(price)
 
     # Load and preprocess the data
-    directory = "yelp_data"
+    directory = os.path.join(os.path.dirname(__file__), "yelp_data")
     filename = "yelp_academic_dataset_business.json"
     df = preprocess_data(directory, filename)
 

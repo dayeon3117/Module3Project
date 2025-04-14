@@ -32,10 +32,10 @@ for key, val in FILE_MAP.items():
 
 # List the file paths that must exist in your repository.
 files_to_check = [
-    "backend/classical_model/embeddings.npy",
-    "backend/classical_model/metadata.csv",
-    "backend/classical_model/model_weights.pth",
-    "backend/naive_model/yelp_data/yelp_academic_dataset_business.json"
+    "classical_model/embeddings.npy",
+    "classical_model/metadata.csv",
+    "classical_model/model_weights.pth",
+    "naive_model/yelp_data/yelp_academic_dataset_business.json"
 ]
 
 print("Checking required files...")
