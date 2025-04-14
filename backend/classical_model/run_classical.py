@@ -9,7 +9,7 @@ def recommend_classical(data):
     price_level = len(price)
 
     # Load model data
-    embeddings = np.load("backend/classical_model/embeddings.npy")
+    embeddings = np.load("backend/classical_model/embeddings.npy", allow_pickle=True)
     df = pd.read_csv("backend/classical_model/metadata.csv")
 
     # Clean and prepare data

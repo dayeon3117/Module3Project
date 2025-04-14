@@ -17,3 +17,4 @@ def download_from_gdrive(file_id, destination):
         for chunk in response.iter_content(32768):
             if chunk:
                 f.write(chunk)
+    print(f"Downloaded: {destination}")
