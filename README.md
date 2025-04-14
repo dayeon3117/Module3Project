@@ -7,6 +7,10 @@ Welcome to our Module 3 Project! This app helps users find restaurants based on 
 The app is deployed and running on Render:  
 **https://module3project.onrender.com**
 
+## Data Pipeline
+
+
+
 ## Models Included
 
 ### 1. Naive Recommender
