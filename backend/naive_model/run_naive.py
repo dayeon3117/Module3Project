@@ -50,7 +50,7 @@ def recommend_naive(data):
         {
             "name": r.get('name', 'Unknown'),
             "category": r.get('categories', 'Unknown'),
-            "rating": r.get('stars', 4.0),   # NOTE: use 'rating' not 'stars'
+            "rating": r.get('stars', 4.0),
             "price": r.get('price_range', 2),
             "address": f"{r.get('city', '')}, {r.get('state', '')}".strip(', ')
         }
