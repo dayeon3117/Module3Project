@@ -52,4 +52,12 @@ def recommend_restaurants(query, model, df, embedding_matrix, top_k=5):
     query_embedding = model.encode(query)
     similarities = cosine_similarity([query_embedding], embedding_matrix)[0]
     top_indices = similarities.argsort()[-top_k:][::-1]
-    return df.iloc[top_indices][['name', 'categories', 'price', 'stars', 'review_count']]
+    top_df = df.iloc[top_indices]
+
+    return top_df.apply(lambda row: {
+        "name": row.get("name", ""),
+        "category": row.get("categories", ""),
+        "rating": row.get("stars", 0),
+        "price": "$" * int(row.get("price", 2)),
+        "address": f"{row.get('city', '')}, {row.get('state', '')}".strip(', ')
+    }, axis=1)

@@ -72,7 +72,7 @@ def recommend_deep(data):
 
     recommendations_df = recommend_restaurants(
         query=food,
-        transformer_model=transformer_model,
+        model=transformer_model,
         df=df_filtered,
         embedding_matrix=embedding_matrix,
         top_k=20
