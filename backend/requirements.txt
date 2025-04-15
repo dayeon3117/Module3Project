@@ -1,0 +1,11 @@
+scikit-learn==1.2.2
+torch==2.2.0 --index-url https://download.pytorch.org/whl/cpu
+numpy==1.26.4
+pandas==2.0.3
+Flask==2.3.3
+flask-cors==4.0.0
+gunicorn==21.2.0
+requests>=2.32.1
+sentence-transformers==2.5.1
+huggingface_hub>=0.21.2
+datasets>=2.19.0
