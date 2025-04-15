@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import pandas as pd
 import ast
+from datasets import load_dataset
 from sentence_transformers import SentenceTransformer
 from deep_model.deep_model import recommend_restaurants
 
@@ -16,15 +17,19 @@ def recommend_deep(data):
     price = data.get("price", "$")
     price_level = len(price)
 
-    # Use only pandas to reduce memory usage
-    df_final = pd.read_csv(
-        "restaurants_with_embeddings.csv",
-        nrows=5000
+    # Load from Hugging Face dataset (only first 3k rows for safety)
+    dataset = load_dataset(
+        "JesseFWarrenV/Yelp-Restaurants",
+        data_files="restaurants_with_embeddings.csv",
+        split="train"
     )
+    df_final = pd.DataFrame(dataset).head(3000)
 
+    # Clean + filter embeddings
     df_final['embedding'] = df_final['embedding'].apply(safe_parse_embedding)
-    df_final = df_final[df_final['embedding'].notnull()]
+    df_final.dropna(subset=['embedding'], inplace=True)
 
+    # Standardize and filter
     df_final['category'] = df_final['category'].fillna('').str.lower()
     df_final['price'] = pd.to_numeric(df_final['price'], errors='coerce').fillna(2).astype(int)
 
@@ -44,17 +49,26 @@ def recommend_deep(data):
 
     try:
         embedding_matrix = np.vstack(df_filtered['embedding'].values)
-    except ValueError:
+    except Exception as e:
         return [{
-            "name": "Error stacking embeddings",
+            "name": f"Embedding stack failed: {str(e)}",
             "category": "",
             "rating": 0,
             "price": 0,
             "address": ""
         }]
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    transformer_model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
+    try:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        transformer_model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
+    except Exception as e:
+        return [{
+            "name": f"Model load failed: {str(e)}",
+            "category": "",
+            "rating": 0,
+            "price": 0,
+            "address": ""
+        }]
 
     recommendations_df = recommend_restaurants(
         query=food,
