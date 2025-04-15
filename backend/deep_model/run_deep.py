@@ -30,7 +30,7 @@ def recommend_deep(data):
     df_final.dropna(subset=['embedding'], inplace=True)
 
     # Standardize and filter
-    df_final['category'] = df_final['category'].fillna('').str.lower()
+    df_final['category'] = df_final['categories'].fillna('').str.lower()
     df_final['price'] = pd.to_numeric(df_final['price'], errors='coerce').fillna(2).astype(int)
 
     df_filtered = df_final[
