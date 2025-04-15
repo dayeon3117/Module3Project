@@ -13,11 +13,16 @@ def safe_parse_embedding(x):
         return None
 
 def recommend_deep(data):
-    user_query = data.get("query", "")
+    # Align inputs
+    food = data.get("food", "").lower()
+    price = data.get("price", "$")
+    price_level = len(price)
 
+    # Load model
     device = "cuda" if torch.cuda.is_available() else "cpu"
     transformer_model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
 
+    # Load and clean dataset
     dataset = load_dataset(
         "JesseFWarrenV/Yelp-Restaurants",
         data_files="restaurants_with_embeddings.csv",
@@ -28,30 +33,44 @@ def recommend_deep(data):
     df_final['embedding'] = df_final['embedding'].apply(safe_parse_embedding)
     df_final = df_final[df_final['embedding'].notnull()]
 
-    # Extra safety check before vstack
-    if len(df_final) == 0:
-        print("No valid embeddings to stack. Returning fallback.")
+    # Standardize fields
+    df_final['category'] = df_final['category'].fillna('').str.lower()
+    df_final['price'] = pd.to_numeric(df_final['price'], errors='coerce').fillna(2).astype(int)
+
+    # Filter by food and price level
+    df_filtered = df_final[
+        df_final['category'].str.contains(food) &
+        (df_final['price'] == price_level)
+    ]
+
+    if df_filtered.empty:
         return [{
-            "name": "No valid embeddings found",
+            "name": "No matching restaurants found",
             "category": "",
             "rating": 0,
             "price": 0,
             "address": ""
         }]
 
+    # Stack filtered embeddings
     try:
-        embedding_matrix = np.vstack(df_final['embedding'].values)
-    except ValueError as e:
-        print(f"Embedding stacking failed: {e}")
+        embedding_matrix = np.vstack(df_filtered['embedding'].values)
+    except ValueError:
         return [{
-            "name": "Error parsing embeddings",
+            "name": "Error stacking embeddings",
             "category": "",
             "rating": 0,
             "price": 0,
             "address": ""
         }]
 
+    # Use "food" as semantic query
     recommendations_df = recommend_restaurants(
-        user_query, transformer_model, df_final, embedding_matrix, top_k=20
+        query=food,
+        transformer_model=transformer_model,
+        df=df_filtered,
+        embedding_matrix=embedding_matrix,
+        top_k=20
     )
+
     return recommendations_df.to_dict(orient="records")
