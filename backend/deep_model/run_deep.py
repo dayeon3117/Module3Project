@@ -78,4 +78,4 @@ def recommend_deep(data):
         top_k=20
     )
 
-    return recommendations_df.to_dict(orient="records")
+    return recommendations_df
