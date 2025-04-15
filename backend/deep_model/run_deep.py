@@ -30,7 +30,7 @@ def recommend_deep(data):
 
     # Extra safety check before vstack
     if len(df_final) == 0:
-        print("⚠️ No valid embeddings to stack. Returning fallback.")
+        print("No valid embeddings to stack. Returning fallback.")
         return [{
             "name": "No valid embeddings found",
             "category": "",
