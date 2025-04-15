@@ -2,7 +2,6 @@ import torch
 import numpy as np
 import pandas as pd
 import ast
-from datasets import load_dataset
 from sentence_transformers import SentenceTransformer
 from deep_model.deep_model import recommend_restaurants
 
@@ -13,31 +12,22 @@ def safe_parse_embedding(x):
         return None
 
 def recommend_deep(data):
-    # Align inputs
     food = data.get("food", "").lower()
     price = data.get("price", "$")
     price_level = len(price)
 
-    # Load model
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    transformer_model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
-
-    # Load and clean dataset
-    dataset = load_dataset(
-        "JesseFWarrenV/Yelp-Restaurants",
-        data_files="restaurants_with_embeddings.csv",
-        split="train"
+    # Use only pandas to reduce memory usage
+    df_final = pd.read_csv(
+        "restaurants_with_embeddings.csv",
+        nrows=5000
     )
-    df_final = pd.DataFrame(dataset).head(5000)  # ⚠️ Limit to avoid OOM
 
     df_final['embedding'] = df_final['embedding'].apply(safe_parse_embedding)
     df_final = df_final[df_final['embedding'].notnull()]
 
-    # Standardize fields
     df_final['category'] = df_final['category'].fillna('').str.lower()
     df_final['price'] = pd.to_numeric(df_final['price'], errors='coerce').fillna(2).astype(int)
 
-    # Filter by food and price level before vstack
     df_filtered = df_final[
         df_final['category'].str.contains(food, case=False, na=False) &
         (df_final['price'] == price_level)
@@ -62,6 +52,9 @@ def recommend_deep(data):
             "price": 0,
             "address": ""
         }]
+
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    transformer_model = SentenceTransformer('all-MiniLM-L6-v2', device=device)
 
     recommendations_df = recommend_restaurants(
         query=food,
