@@ -44,7 +44,7 @@ def run_pipeline(query_idx=0, n=5, save_outputs=True):
         features['stars'].values.reshape(-1, 1)
     ]).toarray()
 
-    # Train/test split (fix: split both features and original DataFrame)
+    # Train/test split
     X_train, X_test, df_train, df_test = train_test_split(
         X, restaurant_df, test_size=0.2, random_state=0
     )
