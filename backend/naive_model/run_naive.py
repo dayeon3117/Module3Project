@@ -2,17 +2,18 @@ import os
 import pandas as pd
 from naive_model.data_preprocessor import preprocess_data
 from naive_model.recommender import naive_recommend
+from datasets import load_dataset
+
+def load_yelp_data():
+    dataset = load_dataset("JesseFWarrenV/Yelp-Restaurants", split="train")
+    return dataset.to_pandas()
 
 def recommend_naive(data):
     food = data.get('food', '').lower()
     price = data.get('price', '$')
     price_level = len(price)
 
-    # Load and preprocess the data
-    directory = os.path.join(os.path.dirname(__file__), "yelp_data")
-    filename = "yelp_academic_dataset_business.json"
-    df = preprocess_data(directory, filename)
-
+    df = load_yelp_data()
     df['categories'] = df['categories'].fillna('').str.lower()
 
     if 'attributes' in df.columns:
@@ -20,11 +21,10 @@ def recommend_naive(data):
             lambda x: x.get('RestaurantsPriceRange2', 2) if isinstance(x, dict) else 2
         )
     else:
-        df['price_range'] = 2  # fallback default
+        df['price_range'] = 2
 
     df['price_range'] = pd.to_numeric(df['price_range'], errors='coerce').fillna(2).astype(int)
 
-    # Filtering
     filtered_df = df[
         df['categories'].str.contains(food) &
         (df['price_range'] == price_level)
@@ -32,7 +32,6 @@ def recommend_naive(data):
 
     print("Filtered rows:", len(filtered_df))
 
-    # Return empty if no matches
     if filtered_df.empty:
         print("No match with price, falling back to category-only")
         filtered_df = df[df['categories'].str.contains(food)]

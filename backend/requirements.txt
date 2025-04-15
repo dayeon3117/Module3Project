@@ -8,3 +8,4 @@ gunicorn==21.2.0
 requests==2.31.0
 sentence-transformers==2.2.2
 huggingface_hub==0.14.1
+datasets>=2.16.0

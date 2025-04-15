@@ -5,10 +5,6 @@ from flask_cors import CORS
 from utils.gdrive_downloader import download_from_gdrive
 
 FILE_MAP = {
-    #"embeddings": {
-     # "id": "1EiTQYAEXhL9WN-pdL949ZQJurvpuHCTg",
-      # "dest": "classical_model/embeddings.npy"
-    #},
     "metadata": {
         "id": "1RctNK1Qld3W9rCLjnptJxylewv7IMfnL",
         "dest": "classical_model/metadata.csv"
@@ -20,32 +16,24 @@ FILE_MAP = {
     "naive_yelp_data": {
         "id": "1ZEoaLub5AKWTq-9BoBoeBPplb9epzxtA",
         "dest": "naive_model/yelp_data/yelp_academic_dataset_business.json"
-    },
-    "deep_yelp_data": {
-        "id": "1ZEoaLub5AKWTq-9BoBoeBPplb9epzxtA",
-        "dest": "deep_model/yelp_data/yelp_academic_dataset_business.json"
     }
 }
 
-# Download missing files
 for key, val in FILE_MAP.items():
     if not os.path.exists(val["dest"]):
         os.makedirs(os.path.dirname(val["dest"]), exist_ok=True)
         print(f"Downloading {key} from Google Drive...")
         download_from_gdrive(val["id"], val["dest"])
 
-# List the file paths that must exist in your repository.
 files_to_check = [
     "classical_model/embeddings.npy",
     "classical_model/metadata.csv",
     "classical_model/model_weights.pth",
-    "naive_model/yelp_data/yelp_academic_dataset_business.json",
-    "deep_model/yelp_data/yelp_academic_dataset_business.json"
+    "naive_model/yelp_data/yelp_academic_dataset_business.json"
 ]
 
 print("Checking required files...")
 
-# Iterate over the expected files and report whether they exist.
 for rel_path in files_to_check:
     abs_path = os.path.abspath(rel_path)
     if os.path.exists(abs_path):
