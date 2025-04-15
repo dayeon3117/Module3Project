@@ -1,6 +1,4 @@
-import os
 import pandas as pd
-from naive_model.data_preprocessor import preprocess_data
 from naive_model.recommender import naive_recommend
 from datasets import load_dataset
 
@@ -25,15 +23,16 @@ def recommend_naive(data):
 
     df['price_range'] = pd.to_numeric(df['price_range'], errors='coerce').fillna(2).astype(int)
 
+    # Filter by category + price
     filtered_df = df[
         df['categories'].str.contains(food) &
         (df['price_range'] == price_level)
     ]
 
-    print("Filtered rows:", len(filtered_df))
+    print("Filtered total rows:", len(filtered_df))
 
     if filtered_df.empty:
-        print("No match with price, falling back to category-only")
+        print("No exact matches. Returning fallback.")
         filtered_df = df[df['categories'].str.contains(food)]
 
     if filtered_df.empty:
@@ -51,8 +50,9 @@ def recommend_naive(data):
         {
             "name": r.get('name', 'Unknown'),
             "category": r.get('categories', 'Unknown'),
-            "rating": r.get('stars', 4.0),
+            "rating": r.get('stars', 4.0),   # NOTE: use 'rating' not 'stars'
             "price": r.get('price_range', 2),
             "address": f"{r.get('city', '')}, {r.get('state', '')}".strip(', ')
-        } for _, r in top_recs.iterrows()
+        }
+        for _, r in top_recs.iterrows()
     ]
