@@ -1,9 +1,16 @@
 import torch
 import numpy as np
 import pandas as pd
+import ast
 from datasets import load_dataset
 from sentence_transformers import SentenceTransformer
 from deep_model.deep_model import recommend_restaurants
+
+def safe_parse_embedding(x):
+    try:
+        return ast.literal_eval(x)
+    except Exception:
+        return None
 
 def recommend_deep(data):
     user_query = data.get("query", "")
@@ -16,8 +23,9 @@ def recommend_deep(data):
     dataset = load_dataset("JesseFWarrenV/Yelp-Restaurants", data_files="restaurants_with_embeddings.csv", split="train")
     df_final = pd.DataFrame(dataset)
 
-    # Parse stringified embeddings
-    df_final['embedding'] = df_final['embedding'].apply(eval)
+    # Safely parse embeddings
+    df_final['embedding'] = df_final['embedding'].apply(safe_parse_embedding)
+    df_final = df_final[df_final['embedding'].notnull()]
     embedding_matrix = np.vstack(df_final['embedding'].values)
 
     # Recommend
