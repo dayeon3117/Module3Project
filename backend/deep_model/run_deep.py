@@ -28,7 +28,7 @@ def recommend_deep(data):
         data_files="restaurants_with_embeddings.csv",
         split="train"
     )
-    df_final = pd.DataFrame(dataset)
+    df_final = pd.DataFrame(dataset).head(5000)  # ⚠️ Limit to avoid OOM
 
     df_final['embedding'] = df_final['embedding'].apply(safe_parse_embedding)
     df_final = df_final[df_final['embedding'].notnull()]
@@ -37,9 +37,9 @@ def recommend_deep(data):
     df_final['category'] = df_final['category'].fillna('').str.lower()
     df_final['price'] = pd.to_numeric(df_final['price'], errors='coerce').fillna(2).astype(int)
 
-    # Filter by food and price level
+    # Filter by food and price level before vstack
     df_filtered = df_final[
-        df_final['category'].str.contains(food) &
+        df_final['category'].str.contains(food, case=False, na=False) &
         (df_final['price'] == price_level)
     ]
 
@@ -52,7 +52,6 @@ def recommend_deep(data):
             "address": ""
         }]
 
-    # Stack filtered embeddings
     try:
         embedding_matrix = np.vstack(df_filtered['embedding'].values)
     except ValueError:
@@ -64,7 +63,6 @@ def recommend_deep(data):
             "address": ""
         }]
 
-    # Use "food" as semantic query
     recommendations_df = recommend_restaurants(
         query=food,
         transformer_model=transformer_model,
