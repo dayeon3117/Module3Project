@@ -14,13 +14,6 @@ function InputForm({ onSearch }) {
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
       <div style={styles.row}>
-        <label style={styles.label}>Location:</label>
-        <input
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="e.g. North Carolina"
-          style={styles.input}
-        />
 
         <label style={styles.label}>Food Type:</label>
         <input
@@ -40,7 +33,7 @@ function InputForm({ onSearch }) {
 
         <label style={styles.label}>Model:</label>
         <select value={model} onChange={(e) => setModel(e.target.value)} style={styles.select}>
-          <option value="naive">Naive (KNN)</option>
+          <option value="naive">Naive</option>
           <option value="classical">Classical ML</option>
           <option value="deep">Deep Learning</option>
         </select>
